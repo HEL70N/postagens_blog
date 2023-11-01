@@ -2,6 +2,7 @@
 
 namespace Code\Controller;
 
+use Ausi\SlugGenerator\SlugGenerator;
 use Code\Authenticator\CheckUserLogged;
 use Code\DB\Connection;
 use Code\Entity\Category;
@@ -42,6 +43,7 @@ class PostsController
                 }
 
                 $post = new Post(Connection::getInstance());
+                $data['slug'] = (new SlugGenerator())->generate($data['title']);
 
                 if (!$post->insert($data)) {
                     Flash::add('error', 'Erro ao criar postagem');
